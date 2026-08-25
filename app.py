@@ -536,7 +536,15 @@ if data_source == "Upload CSV":
         raw_df = load_csv(uploaded_file)
 else:
     st.sidebar.caption("Sheet must be shared as 'Anyone with the link' → Viewer.")
-    sheet_url = st.sidebar.text_input("Google Sheet URL", key="gsheet_url")
+
+    default_sheet_url = st.secrets.get("GOOGLE_SHEETS_URL", "")
+
+    sheet_url = st.sidebar.text_input(
+        "Google Sheet URL",
+        value=default_sheet_url,
+        key="gsheet_url",
+    )
+
     if sheet_url:
         raw_df = load_csv_from_gsheet(sheet_url)
 
